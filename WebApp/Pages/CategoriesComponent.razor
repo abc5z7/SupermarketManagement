@@ -1,0 +1,53 @@
+﻿
+@page "/categories"
+@inject NavigationManager NavigationManager
+@inject UseCases.UseCaseInterfaces.IViewCategoriesUseCase ViewCategoryUseCase
+
+<h3>管理类别</h3>
+
+@if (categories != null)
+{
+	<table class="table">
+		<thead>
+			<tr>
+				<th> 名字 </th>
+				<th> 描述 </th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var item in categories)
+			{
+				<tr>
+					<td> @item.Name</td>
+					<td> @item.Description</td>
+					<td><button type="button" class="btn btn-link"
+						@onclick="@(() => EditCategory(item))">编辑</button></td>
+				</tr>
+			}
+		</tbody>
+	</table>
+
+	<br/>
+	<button type="button" class="btn btn-primary" @onclick="OnClickAddCategory">增加类别</button>
+}
+@code {
+	private List<Category> categories;
+
+	protected override void OnInitialized()
+	{
+		base.OnInitialized();
+
+		categories = ViewCategoryUseCase.Execute()?.ToList();
+	}
+
+	private void OnClickAddCategory()
+	{
+		NavigationManager.NavigateTo("/addcategory");
+	}
+
+	private void EditCategory(Category category)
+	{
+		NavigationManager.NavigateTo($"/editcategory/{category.CategoryId}");
+	}
+}

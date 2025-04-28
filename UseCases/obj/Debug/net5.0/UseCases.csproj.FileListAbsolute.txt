@@ -1,0 +1,15 @@
+C:\Users\chase\source\repos\SupermarketManagement\UseCases\bin\Debug\net5.0\UseCases.deps.json
+C:\Users\chase\source\repos\SupermarketManagement\UseCases\bin\Debug\net5.0\UseCases.dll
+C:\Users\chase\source\repos\SupermarketManagement\UseCases\bin\Debug\net5.0\UseCases.pdb
+C:\Users\chase\source\repos\SupermarketManagement\UseCases\bin\Debug\net5.0\CoreBussiness.dll
+C:\Users\chase\source\repos\SupermarketManagement\UseCases\bin\Debug\net5.0\CoreBussiness.pdb
+C:\Users\chase\source\repos\SupermarketManagement\UseCases\obj\Debug\net5.0\UseCases.csproj.AssemblyReference.cache
+C:\Users\chase\source\repos\SupermarketManagement\UseCases\obj\Debug\net5.0\UseCases.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\chase\source\repos\SupermarketManagement\UseCases\obj\Debug\net5.0\UseCases.AssemblyInfoInputs.cache
+C:\Users\chase\source\repos\SupermarketManagement\UseCases\obj\Debug\net5.0\UseCases.AssemblyInfo.cs
+C:\Users\chase\source\repos\SupermarketManagement\UseCases\obj\Debug\net5.0\UseCases.csproj.CoreCompileInputs.cache
+C:\Users\chase\source\repos\SupermarketManagement\UseCases\obj\Debug\net5.0\UseCases.csproj.Up2Date
+C:\Users\chase\source\repos\SupermarketManagement\UseCases\obj\Debug\net5.0\UseCases.dll
+C:\Users\chase\source\repos\SupermarketManagement\UseCases\obj\Debug\net5.0\refint\UseCases.dll
+C:\Users\chase\source\repos\SupermarketManagement\UseCases\obj\Debug\net5.0\UseCases.pdb
+C:\Users\chase\source\repos\SupermarketManagement\UseCases\obj\Debug\net5.0\ref\UseCases.dll
