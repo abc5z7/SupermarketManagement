@@ -44,6 +44,7 @@ namespace Plugins.DataStore.InMemory
 
 		public IEnumerable<Category> GetCategories()
         {
+            //
             return categories;
         }
 
