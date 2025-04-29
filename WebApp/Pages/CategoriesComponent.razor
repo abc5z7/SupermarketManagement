@@ -2,7 +2,7 @@
 @page "/categories"
 @inject NavigationManager NavigationManager
 @inject UseCases.UseCaseInterfaces.IViewCategoriesUseCase ViewCategoryUseCase
-
+@inject UseCases.UseCaseInterfaces.IDeleteCategoryUseCase DeleteCategoryUseCase
 <h3>管理类别</h3>
 
 @if (categories != null)
@@ -21,8 +21,14 @@
 				<tr>
 					<td> @item.Name</td>
 					<td> @item.Description</td>
-					<td><button type="button" class="btn btn-link"
-						@onclick="@(() => EditCategory(item))">编辑</button></td>
+					<td>
+						<button type="button" class="btn btn-link"
+						@onclick="@(() => EditCategory(item))">编辑</button>
+						<button type="button" class="btn btn-link"
+								@onclick="@(() => DeleteCategory(item.CategoryId))">
+							删除
+						</button>
+					</td>
 				</tr>
 			}
 		</tbody>
@@ -38,6 +44,11 @@
 	{
 		base.OnInitialized();
 
+		LoadCategories();
+	}
+
+	private void LoadCategories()
+	{
 		categories = ViewCategoryUseCase.Execute()?.ToList();
 	}
 
@@ -49,5 +60,10 @@
 	private void EditCategory(Category category)
 	{
 		NavigationManager.NavigateTo($"/editcategory/{category.CategoryId}");
+	}
+	private void DeleteCategory(int Id)
+	{
+		DeleteCategoryUseCase.Delete(Id);
+		LoadCategories();
 	}
 }
