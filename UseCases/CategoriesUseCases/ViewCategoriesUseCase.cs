@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UseCases.DataStorePluginInterfaces;
 using UseCases.UseCaseInterfaces;
 
-namespace UseCases
+namespace UseCases.CategoriesUseCases
 {
     public class ViewCategoriesUseCase : IViewCategoriesUseCase
     {

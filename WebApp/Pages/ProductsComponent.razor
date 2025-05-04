@@ -1,0 +1,47 @@
+﻿@page "/products"
+@inject UseCases.UseCaseInterfaces.IViewProductsUseCase ViewProductsUseCase
+@inject UseCases.UseCaseInterfaces.IGetCategoryByIdUseCase GetCategoryByIdUseCase
+@inject NavigationManager NavigationManager
+<h3>产品管理</h3>
+<br />
+@if(products != null)
+{
+	<table class="table">
+		<thead>
+			<tr>
+				<th>产品类别</th>
+				<th>产品名字</th>
+				<th>价格</th>
+				<th>数量</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var item in products)
+			{
+				<tr>
+					<td>@GetCategoryByIdUseCase.Execute(@item.CategoryId.Value)?.Name</td>
+					<td>@item.Name</td>
+					<td>@(Math.Round(item.Price.Value, 2))</td>
+					<td>@item.Quantity</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+}
+<br/>
+<button type="button" @onclick="OnClickAddProduct"  class="btn btn-primary">添加产品</button>
+@code {
+	private IEnumerable<Product> products;
+
+	protected override void OnInitialized()
+	{
+		base.OnInitialized();
+
+		products = ViewProductsUseCase.Execute();
+	}
+
+	private void OnClickAddProduct()
+	{
+		NavigationManager.NavigateTo("/addproduct");
+	}
+}

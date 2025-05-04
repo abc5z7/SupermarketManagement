@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using UseCases;
+using UseCases.CategoriesUseCases;
 using UseCases.DataStorePluginInterfaces;
 using UseCases.UseCaseInterfaces;
 using WebApp.Data;
@@ -34,15 +35,18 @@ namespace WebApp
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
 
-            // “¿¿µ◊¢»Î ≤÷¥¢
-            services.AddScoped<ICategoryRepository,CategoryInMemoryRepository>();
-
             // “¿¿µ◊¢»Î “µŒÒ
+            services.AddScoped<ICategoryRepository,CategoryInMemoryRepository>();
+            services.AddScoped<IProductRepository,ProductInMemoryRepository>();
+
+            // “¿¿µ◊¢»Î 
             services.AddTransient<IViewCategoriesUseCase, ViewCategoriesUseCase>();
             services.AddTransient<IAddCategoryUseCase, AddCategoryUseCase>();
             services.AddTransient<IEditCategoryUseCase, EditCategoryUseCase>();
             services.AddTransient<IGetCategoryByIdUseCase, GetCategoryByIdUseCase>();
             services.AddTransient<IDeleteCategoryUseCase, DeleteCategoryUseCase>();
+            services.AddTransient<IViewProductsUseCase, ViewProductsUseCase>();
+            services.AddTransient<IAddProductUseCase, AddProductUseCase>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

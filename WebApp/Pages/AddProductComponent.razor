@@ -1,0 +1,60 @@
+﻿@page "/addproduct"
+@inject NavigationManager NavigationManager
+@inject UseCases.UseCaseInterfaces.IAddProductUseCase AddProductUseCase
+@inject UseCases.UseCaseInterfaces.IViewCategoriesUseCase ViewCategoriesUseCase
+<h3>添加产品</h3>
+
+@if (product != null)
+{
+	<EditForm Model="product" OnValidSubmit="OnValidSubmit">
+		<DataAnnotationsValidator></DataAnnotationsValidator>
+		<ValidationSummary></ValidationSummary>
+
+		<div class="form-group">
+			<label for="name">产品名</label>
+			<InputText id="name" @bind-Value="product.Name" class="form-control"></InputText>
+		</div>
+		<div class="form-group">
+			<label for="category">种类</label>
+			<select id="category" @bind="product.CategoryId" class="form-select">
+				<option value="0" selected></option>
+				@foreach (var item in categories)
+				{
+					<option value="@item.CategoryId">@item.Name</option>
+				}
+			</select>
+		</div>
+		<div class="form-group">
+			<label for="Quantity">数量</label>
+			<InputNumber id="Quantity" @bind-Value="product.Quantity" @bind-Value:format="F2" class="form-control"></InputNumber>
+		</div>
+		<div class="form-group">
+			<label for="Price">价格</label>
+			<InputNumber id="Price" @bind-Value="product.Price" @bind-Value:format="F2" class="form-control"></InputNumber>
+		</div>
+		<button type="submit" class="btn btn-primary">保存</button>
+		<button type="button" class="btn btn-primary" @onclick="OnCancel">取消</button>
+	</EditForm>
+}
+
+@code {
+	private Product product;
+	private IEnumerable<Category> categories;
+
+	protected override void OnInitialized()
+	{
+		base.OnInitialized();
+
+		product = new Product();
+		categories = ViewCategoriesUseCase.Execute();
+	}
+	private void OnCancel()
+	{
+		NavigationManager.NavigateTo("/products");
+	}
+	private void OnValidSubmit()
+	{
+		AddProductUseCase.Execute(product);
+		NavigationManager.NavigateTo("/products");
+	}
+}
