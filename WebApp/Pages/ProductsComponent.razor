@@ -23,6 +23,7 @@
 					<td>@item.Name</td>
 					<td>@(Math.Round(item.Price.Value, 2))</td>
 					<td>@item.Quantity</td>
+					<td><button type="button" class="btn btn-link" @onclick="@(()=>OnEditProduct(item))">编辑</button></td>
 				</tr>
 			}
 		</tbody>
@@ -43,5 +44,10 @@
 	private void OnClickAddProduct()
 	{
 		NavigationManager.NavigateTo("/addproduct");
+	}
+
+	private void OnEditProduct(Product product)
+	{
+		NavigationManager.NavigateTo($"/editproduct/{product.ProductId}");
 	}
 }

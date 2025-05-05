@@ -1,0 +1,82 @@
+﻿@page "/editproduct/{Id}"
+
+@inject NavigationManager NavigationManager
+@inject UseCases.UseCaseInterfaces.IViewProductsUseCase ViewProductsUseCase
+@inject UseCases.UseCaseInterfaces.IEditProductUseCase EditProductUseCase
+@inject UseCases.UseCaseInterfaces.IGetProductByIdUseCase GetProductByIdUseCase
+@inject UseCases.UseCaseInterfaces.IViewCategoriesUseCase ViewCategoriesUseCase
+
+<h3>EditProductComponent</h3>
+@if (product != null)
+{
+	<EditForm Model="product" OnValidSubmit="OnValidSumit">
+		<DataAnnotationsValidator>
+		</DataAnnotationsValidator>
+		<ValidationSummary>
+		</ValidationSummary>
+		<div class="form-group">
+			<label for="name">产品名</label>
+			<InputText id="name" @bind-Value="product.Name" class="form-control"></InputText>
+		</div>
+		<div class="form-group">
+			<label for="category">种类</label>
+			<select id="category" @bind="product.CategoryId" class="form-select">
+				<option value="0" selected></option>
+				@foreach (var item in categories)
+				{
+					<option value="@item.CategoryId">@item.Name</option>
+				}
+			</select>
+		</div>
+		<div class="form-group">
+			<label for="Quantity">数量</label>
+			<InputNumber id="Quantity" @bind-Value="product.Quantity" @bind-Value:format="F2" class="form-control"></InputNumber>
+		</div>
+		<div class="form-group">
+			<label for="Price">价格</label>
+			<InputNumber id="Price" @bind-Value="product.Price" @bind-Value:format="F2" class="form-control"></InputNumber>
+		</div>
+		<button type="submit" class="btn btn-primary">保存</button>
+		<button type="button" class="btn btn-primary" @onclick="OnCancel">取消</button>
+	</EditForm>
+}
+@code {
+	[Parameter]
+	public string Id { get; set; }
+
+	private Product product;
+
+	private IEnumerable<Category> categories;
+
+	protected override void OnInitialized()
+	{
+		base.OnInitialized();
+		categories = ViewCategoriesUseCase.Execute();
+	}
+	protected override void OnParametersSet()
+	{
+		base.OnParametersSet();
+		if (int.TryParse(this.Id, out int proId))
+		{
+			var model =  GetProductByIdUseCase.Execute(proId);
+			product = new Product()
+				{
+					ProductId = model.ProductId,
+					CategoryId = model.CategoryId,
+					Name = model.Name,
+					Price = model.Price,
+					Quantity = model.Quantity
+				};
+		}
+
+	}
+	private void OnValidSumit()
+	{
+		EditProductUseCase.Execute(this.product);
+		NavigationManager.NavigateTo("/products");
+	}
+	private void OnCancel()
+	{
+		NavigationManager.NavigateTo("/products");
+	}
+}
