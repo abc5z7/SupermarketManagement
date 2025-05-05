@@ -7,19 +7,19 @@ using System.Threading.Tasks;
 using UseCases.DataStorePluginInterfaces;
 using UseCases.UseCaseInterfaces;
 
-namespace UseCases
+namespace UseCases.ProductsUseCases
 {
-    public class AddProductUseCase : IAddProductUseCase
+    public class GetProductByIdUseCase : IGetProductByIdUseCase
     {
         private readonly IProductRepository productRepository;
 
-        public AddProductUseCase(IProductRepository productRepository)
+        public GetProductByIdUseCase(IProductRepository productRepository)
         {
             this.productRepository = productRepository;
         }
-        public void Execute(Product product)
+        public Product Execute(int Id)
         {
-            productRepository.AddProduct(product);
+            return productRepository.GetProductById(Id);
         }
     }
 }
