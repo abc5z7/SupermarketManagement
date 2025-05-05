@@ -2,6 +2,7 @@
 @inject UseCases.UseCaseInterfaces.IViewProductsUseCase ViewProductsUseCase
 @inject UseCases.UseCaseInterfaces.IGetCategoryByIdUseCase GetCategoryByIdUseCase
 @inject NavigationManager NavigationManager
+@inject UseCases.UseCaseInterfaces.IDeleteProductUseCase DeleteProductUseCase
 <h3>产品管理</h3>
 <br />
 @if(products != null)
@@ -24,6 +25,7 @@
 					<td>@(Math.Round(item.Price.Value, 2))</td>
 					<td>@item.Quantity</td>
 					<td><button type="button" class="btn btn-link" @onclick="@(()=>OnEditProduct(item))">编辑</button></td>
+					<td><button type="button" class="btn btn-link" @onclick="@(()=>OnDeleteProduct(item))">删除</button></td>
 				</tr>
 			}
 		</tbody>
@@ -49,5 +51,9 @@
 	private void OnEditProduct(Product product)
 	{
 		NavigationManager.NavigateTo($"/editproduct/{product.ProductId}");
+	}
+	private void OnDeleteProduct(Product product)
+	{
+		DeleteProductUseCase.Execute(product.ProductId);
 	}
 }
