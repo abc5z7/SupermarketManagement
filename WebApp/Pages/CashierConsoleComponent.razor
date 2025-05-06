@@ -3,12 +3,25 @@
 <br/>
 <div class="row">
 	<div class="col-4">
-		<SelectProductForSellingComponent></SelectProductForSellingComponent>
+		<SelectProductForSellingComponent OnProductSelected="SelectProduct">
+		</SelectProductForSellingComponent>
+		<SellProductComponent SelectedProduct="selectedProduct" OnProductSold="SellProduct">
+		</SellProductComponent>
 	</div>
 	<div class="col">
 		占位符
 	</div>
 </div>
-@code {
 
+@code {
+	private Product selectedProduct;
+
+	private void SelectProduct(Product product) 
+	{
+		selectedProduct = product;
+	}
+	private void SellProduct(Product product) 
+	{
+
+	}
 }
