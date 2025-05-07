@@ -1,0 +1,44 @@
+﻿@inject UseCases.UseCaseInterfaces.IGetTodayTransactionUseCase GetTodayTransactionUseCase
+
+<h3>TodayTransactions</h3>
+@if (transactions != null)
+{
+	<table class="table">
+		<thead>
+			<tr>
+				<th>买家名</th>
+				<th>产品名</th>
+				<th>时间</th>
+				<th>买前数量</th>
+				<th>买数</th>
+				<th>买后数量</th>
+				<th>销售额</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var item in transactions)
+			{
+				<tr>
+					<td>@item.CashierName</td>
+					<td>@item.ProductName</td>
+					<td>@item.TimeStamp.ToString("MM/dd")</td>
+					<td>@item.BeforeQty</td>
+					<td>@item.SoldQty</td>
+					<td>@(item.BeforeQty - item.SoldQty)</td>
+					<td>@(string.Format("{0:c}", item.SoldQty * item.Price))</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+}
+
+@code {
+	private IEnumerable<Transaction> transactions;
+	private string cashierName;
+
+	public void LoadTransactions(string cashierName)
+	{
+		transactions = GetTodayTransactionUseCase.Execute(cashierName);
+		StateHasChanged();
+	}
+}

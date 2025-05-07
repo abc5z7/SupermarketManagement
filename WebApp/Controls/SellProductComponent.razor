@@ -35,6 +35,9 @@
 	private Product productToSell;
 
 	[Parameter]
+	public string CashierName { get; set; }
+
+	[Parameter]
 	public Product SelectedProduct { get; set; }
 
 	[Parameter]
@@ -62,6 +65,12 @@
 	}
 	private void SellProduct() 
 	{
+		if (string.IsNullOrEmpty(CashierName))
+		{
+			errorMessage = "买家名缺失";
+			return;
+		}
+
 		var prod = GetProductByIdUseCase.Execute(productToSell.ProductId);
 		if (productToSell.Quantity <= 0)
 		{
@@ -70,9 +79,12 @@
 
 		else if (prod.Quantity >= productToSell.Quantity)
 		{
+			if (string.IsNullOrEmpty(CashierName)) 
+				throw new ApplicationException("买家名缺失，不能出售");
+
 			OnProductSold.InvokeAsync(productToSell);
 			errorMessage = string.Empty;
-			SellProductUseCase.Execute(productToSell.ProductId, productToSell.Quantity.Value);
+			SellProductUseCase.Execute(CashierName, productToSell.ProductId, productToSell.Quantity.Value);
 		}
 		else
 		{

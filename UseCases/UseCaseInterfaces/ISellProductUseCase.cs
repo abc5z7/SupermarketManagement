@@ -2,6 +2,6 @@
 {
     public interface ISellProductUseCase
     {
-        void Execute(int id, int qty);
+        void Execute(string cashierName, int id, int qty);
     }
 }

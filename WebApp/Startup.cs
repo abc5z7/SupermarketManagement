@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using UseCases;
 using UseCases.CategoriesUseCases;
 using UseCases.DataStorePluginInterfaces;
 using UseCases.ProductsUseCases;
@@ -38,6 +39,7 @@ namespace WebApp
             // 依赖注入 业务
             services.AddScoped<ICategoryRepository,CategoryInMemoryRepository>();
             services.AddScoped<IProductRepository,ProductInMemoryRepository>();
+            services.AddScoped<ITransactionRepository, TransactionInMemoryRepository>();
 
             // 依赖注入 
             services.AddTransient<IViewCategoriesUseCase, ViewCategoriesUseCase>();
@@ -52,6 +54,8 @@ namespace WebApp
             services.AddTransient<IDeleteProductUseCase, DeleteProductUseCase>();
             services.AddTransient<IViewProductsByCategoryId,  ViewProductsByCategoryId>();
             services.AddTransient<ISellProductUseCase, SellProductUseCase>();
+            services.AddTransient<IRecordTransactionUseCase, RecordTransactionUseCase>();
+            services.AddTransient<IGetTodayTransactionUseCase, GetTodayTransactionUseCase>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
