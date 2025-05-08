@@ -1,0 +1,96 @@
+﻿@page "/transactions"
+@inject IJSRuntime JSRuntime
+@inject UseCases.UseCaseInterfaces.IGetTransactionsUseCase GetTransactionsUseCase
+<div class="row">
+	<div class="col-2">
+		<label>买家名</label>
+		<input type="text" id="cashier" class="form-control" @bind-value="cashierName" />
+	</div>
+	<div class="col-3">
+		<label for="startdate">开始时间</label>
+		<input type="date" id="startdate" class="form-control" @bind-value="startDate" />
+	</div>
+	<div class="col-3">
+		<label for="enddate">结束时间</label>
+		<input type="date" id="enddate" class="form-control" @bind-value="endDate" />
+	</div>
+	<div class="col-2">
+		<label>&nbsp;</label>
+		<button type="button" class="btn btn-primary" @onclick="LoadTransactions">搜索</button>
+	</div>
+	<div class="col-2">
+		<label>&nbsp;</label>
+		<button type="button" class="btn btn-primary" @onclick="PrintReport">打印</button>
+	</div>
+</div>
+<br />
+@if (transactions != null)
+{
+	<div id="printarea">
+		<table class="table">
+			<thead>
+				<tr>
+					<th>时间</th>
+					<th>买家名</th>
+					<th>产品名</th>
+					<th>买前数量</th>
+					<th>买数</th>
+					<th>买后数量</th>
+					<th>单价</th>
+					<th>销售额</th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var item in transactions)
+				{
+					<tr>
+						<td>@item.TimeStamp.ToString("yyyy-MM-dd hh:mm")</td>
+						<td>@item.CashierName</td>
+						<td>@item.ProductName</td>
+						<td>@item.BeforeQty</td>
+						<td>@item.SoldQty</td>
+						<td>@(item.BeforeQty - item.SoldQty)</td>
+						<td>@(string.Format("{0:c}", item.Price))</td>
+						<td style="text-align:right">@(string.Format("{0:c}", item.SoldQty * item.Price))</td>
+					</tr>
+				}
+			</tbody>
+			<tfoot>
+				<tr>
+					<td colspan="6">&nbsp;</td>
+					<td>
+						<b>总计：</b>
+					</td>
+					<td style="text-align:right">
+						<b>
+							@(string.Format("{0:c}", transactions.Sum(m => m.Price * m.SoldQty)))
+
+						</b>
+					</td>
+				</tr>
+			</tfoot>
+		</table>
+	</div>
+	
+}
+@code {
+	private string cashierName;
+	private DateTime startDate;
+	private DateTime endDate;
+	private IEnumerable<Transaction> transactions;
+
+	protected override void OnInitialized() {
+		base.OnInitialized();
+		startDate = DateTime.Today;
+		endDate = DateTime.Today;
+	}
+
+	private void LoadTransactions()
+	{
+		transactions = GetTransactionsUseCase.Execute(cashierName, startDate, endDate);
+
+	}
+	void PrintReport() {
+		JSRuntime.InvokeVoidAsync("print");
+	}
+}
