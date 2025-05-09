@@ -43,10 +43,15 @@ namespace WebApp
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
 
-            // 依赖注入 业务
-            services.AddScoped<ICategoryRepository,CategoryInMemoryRepository>();
-            services.AddScoped<IProductRepository,ProductInMemoryRepository>();
-            services.AddScoped<ITransactionRepository, TransactionInMemoryRepository>();
+            // 依赖注入 临时数据
+            //services.AddScoped<ICategoryRepository,CategoryInMemoryRepository>();
+            //services.AddScoped<IProductRepository,ProductInMemoryRepository>();
+            //services.AddScoped<ITransactionRepository, TransactionInMemoryRepository>();
+
+            // 依赖注入 数据库交互
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<ITransactionRepository, TransactionRepository>();
 
             // 依赖注入 
             services.AddTransient<IViewCategoriesUseCase, ViewCategoriesUseCase>();

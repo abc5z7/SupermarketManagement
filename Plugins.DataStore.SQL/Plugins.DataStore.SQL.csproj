@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CoreBussiness\CoreBussiness.csproj" />
+    <ProjectReference Include="..\UseCases\UseCases.csproj" />
   </ItemGroup>
 
 </Project>
