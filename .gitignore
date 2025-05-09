@@ -367,3 +367,4 @@ MigrationBackup/
 FodyWeavers.xsd
 
 /.vscode
+/Plugins.DataStore.SQL/Migrations

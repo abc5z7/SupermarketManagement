@@ -18,5 +18,8 @@ namespace CoreBussiness
 		public int? Quantity { get; set; }
 		[Required]
 		public double? Price { get; set; }
+
+		// ef core的导航属性
+		public Category Category { get; set; }
     }
 }
