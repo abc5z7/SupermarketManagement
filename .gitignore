@@ -368,3 +368,4 @@ FodyWeavers.xsd
 
 /.vscode
 /Plugins.DataStore.SQL/Migrations
+/WebApp/Migrations
